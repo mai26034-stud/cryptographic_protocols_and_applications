@@ -1,0 +1,4 @@
+Βιβλιοθήκες:
+cryptography
+PyNaCl
+psutil
