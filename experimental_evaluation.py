@@ -20,26 +20,26 @@ def benchmark(cipher_class):
     process = psutil.Process()
 
     for size in MESSAGE_SIZES:
-        msg = os.urandom(size)
+        message = os.urandom(size)
         aad = b"associated_data"
         key = cipher_class.generate_key()
         cipher = cipher_class(key)
 
         for _ in range(5):
-            cipher.encrypt(os.urandom(cipher_class.NONCE_SIZE), aad, msg)
+            cipher.encrypt(os.urandom(cipher_class.NONCE_SIZE), aad, message)
 
         cpu_before = process.cpu_percent()
-        mem_before = process.memory_info().rss
+        memory_before = process.memory_info().rss
 
         start = time.perf_counter_ns()
         for _ in range(REPETITIONS[size]):
             nonce = os.urandom(cipher_class.NONCE_SIZE)
-            ct = cipher.encrypt(nonce, aad, msg)
+            ct = cipher.encrypt(nonce, aad, message)
             cipher.decrypt(nonce, aad, ct)
         elapsed_ns = time.perf_counter_ns() - start
 
         cpu_after = process.cpu_percent()
-        mem_after = process.memory_info().rss
+        memory_after = process.memory_info().rss
 
         ops = REPETITIONS[size] * 2
         throughput = (size * ops) / (elapsed_ns / 1e9) / 1e6
@@ -50,7 +50,7 @@ def benchmark(cipher_class):
             "throughput_mb_s": throughput,
             "latency_ms": latency,
             "cpu_usage_percent": (cpu_before + cpu_after) / 2,
-            "mem_peak_mb": max(mem_before, mem_after) / 1e6
+            "memory_peak_mb": max(memory_before, memory_after) / 1e6
         })
 
     return results
