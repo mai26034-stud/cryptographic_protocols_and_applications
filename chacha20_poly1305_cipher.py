@@ -4,7 +4,7 @@ from aead.base import AeadCipher
 
 class ChaChaPolyCipher(AeadCipher):
     KEY_SIZE = nacl.secret.SecretBox.KEY_SIZE
-    NONCE_SIZE = nacl.secret.SecretBox.NONCE_SIZE  # 192-bit
+    NONCE_SIZE = nacl.secret.SecretBox.NONCE_SIZE
 
     def __init__(self, key: bytes):
         self.box = nacl.secret.SecretBox(key)
