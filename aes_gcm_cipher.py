@@ -3,8 +3,8 @@ from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from aead.base import AeadCipher
 
 class AESGcmCipher(AeadCipher):
-    KEY_SIZE = 32          # 256-bit
-    NONCE_SIZE = 12        # 96-bit
+    KEY_SIZE = 32
+    NONCE_SIZE = 12
 
     def __init__(self, key: bytes):
         self.aesgcm = AESGCM(key)
