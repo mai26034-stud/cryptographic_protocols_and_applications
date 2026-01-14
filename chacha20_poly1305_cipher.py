@@ -1,6 +1,6 @@
 import nacl.secret
 import nacl.utils
-from aead.base import AeadCipher
+from aead_interface import AeadCipher
 
 class ChaChaPolyCipher(AeadCipher):
     KEY_SIZE = nacl.secret.SecretBox.KEY_SIZE
