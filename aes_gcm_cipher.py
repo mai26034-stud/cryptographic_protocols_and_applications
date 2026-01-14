@@ -1,6 +1,6 @@
 import os
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-from aead.base import AeadCipher
+from aead_interface import AeadCipher
 
 class AESGcmCipher(AeadCipher):
     KEY_SIZE = 32
