@@ -1,6 +1,6 @@
 import os
 from aead.aes_gcm import AESGcmCipher
-from aead.chacha20_poly1305 import ChaChaPolyCipher
+from chacha20_poly1305_cipher import ChaChaPolyCipher
 
 def misuse_test(cipher_class):
     key = cipher_class.generate_key()
