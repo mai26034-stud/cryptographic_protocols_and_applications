@@ -20,10 +20,10 @@ and not for production use.
 
 
 ## Repository Structure
-- `aes_gcm_implementation.py`  
+- `aes_gcm_cipher.py`  
   Implementation of the AES-GCM AEAD scheme using the `cryptography` library.
 
-- `chacha20_poly1305_implementation.py`  
+- `chacha20_poly1305_cipher.py`  
   Implementation of the ChaCha20-Poly1305 AEAD scheme using the `PyNaCl` library.
 
 - `experimental_evaluation.py`  
@@ -41,8 +41,3 @@ Requirements:
 - PyNaCl
 - psutil
 - matplotlib
-
-Dependencies can be installed using:
-
-```bash
-pip install -r requirements.txt
