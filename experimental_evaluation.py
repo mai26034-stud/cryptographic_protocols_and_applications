@@ -1,6 +1,7 @@
 import os
 import time
 import psutil
+from codecarbon import OfflineEmissionsTracker
 
 MESSAGE_SIZES = [
     64, 256, 1024, 4096, 16384,
@@ -18,6 +19,7 @@ REPETITIONS = {
 def benchmark(cipher_class):
     results = []
     process = psutil.Process()
+    tracker = OfflineEmissionsTracker(country_iso_code="GRC", output_dir=".")
 
     for size in MESSAGE_SIZES:
         message = os.urandom(size)
@@ -31,12 +33,16 @@ def benchmark(cipher_class):
         cpu_before = process.cpu_percent()
         memory_before = process.memory_info().rss
 
+        tracker.start()
         start = time.perf_counter_ns()
         for _ in range(REPETITIONS[size]):
             nonce = os.urandom(cipher_class.NONCE_SIZE)
             ct = cipher.encrypt(nonce, aad, message)
             cipher.decrypt(nonce, aad, ct)
         elapsed_ns = time.perf_counter_ns() - start
+
+        energy_joules = tracker.stop()
+        energy_joules *= 3600000
 
         cpu_after = process.cpu_percent()
         memory_after = process.memory_info().rss
@@ -50,7 +56,8 @@ def benchmark(cipher_class):
             "throughput_mb_s": throughput,
             "latency_ms": latency,
             "cpu_usage_percent": (cpu_before + cpu_after) / 2,
-            "memory_peak_mb": max(memory_before, memory_after) / 1e6
+            "memory_peak_mb": max(memory_before, memory_after) / 1e6,
+            "estimated_energy_joules": round(energy_joules, 4)
         })
 
     return results
