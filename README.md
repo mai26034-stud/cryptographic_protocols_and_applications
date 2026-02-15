@@ -41,3 +41,4 @@ Requirements:
 - PyNaCl
 - psutil
 - matplotlib
+- codecarbon
