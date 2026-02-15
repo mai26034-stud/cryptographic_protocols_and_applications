@@ -49,4 +49,8 @@ if __name__ == "__main__":
     with open("chacha_benchmark.json", "w") as f:
         json.dump(chacha_results, f, indent=2)
 
+    print(f"Size: {r['size']} bytes | Throughput: {r['throughput_mb_s']:.2f} MB/s | "
+      f"Latency: {r['latency_ms']:.4f} ms | "
+      f"Energy: {r['estimated_energy_joules']} J")
+
     print("\nResults saved to JSON files for plotting.")
